@@ -1,26 +1,35 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import CssBaseline from '@mui/material/CssBaseline';
+import Header from './components/Header';
+import { connect } from 'react-redux';
+import { LoginState } from './types/Login';
+import Login from './components/Login';
+import ToDoList from './components/ToDoList';
+import store from './store';
 
-function App() {
+const App = ({ isLogin }: Props) => {
+  console.log(store.getState());
   return (
+    <>
+    <CssBaseline />
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      {isLogin ?<ToDoList/>:<Login /> }
     </div>
+    </>
   );
 }
 
-export default App;
+
+type StateToProps = {
+  isLogin:LoginState['login']['isLogin']
+};
+type Props = StateToProps;
+
+const mapStateToProps = (state: LoginState) => {
+  return {
+    isLogin: state['login']['isLogin']
+  }
+};
+
+export default connect(mapStateToProps)(App);
