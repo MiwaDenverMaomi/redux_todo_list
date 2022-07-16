@@ -14,7 +14,7 @@ const App = ({ isLogin }: Props) => {
     <CssBaseline />
     <div className="App">
       <Header />
-      {isLogin ?<ToDoList/>:<Login /> }
+      <ToDoList/>
     </div>
     </>
   );

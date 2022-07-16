@@ -31,7 +31,7 @@ const ToDoList = ({todos,deleteTodo,checkTodo,editMode,edit_id,editTodo}:Props) 
 
    }
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs" sx={{textAlign:'center'}}>
       <Box
           sx={{
             marginTop: 8,
