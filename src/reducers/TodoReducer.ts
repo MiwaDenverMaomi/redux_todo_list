@@ -1,4 +1,5 @@
-import {TodoState,TodoActions} from '../types/Todo';
+import { TodoState, TodoActions } from '../types/Todo';
+
 
 type InitialState=TodoState['todo'];
 
@@ -16,6 +17,7 @@ const TodoReducer=(state=initialState,action:TodoActions)=>{
       break;
      case 'ADD_TODO':
        console.log('addtodo');
+       console.log(action)
        if (state.todo.trim() !== '') {
          return {
            ...state, todos: [...state.todos, {
@@ -34,7 +36,7 @@ const TodoReducer=(state=initialState,action:TodoActions)=>{
         break;
       case 'CHECK_TODO':
         console.log('checktodo');
-        console.log(action.payload);
+        console.log(action);
         return{...state,todos:state.todos.map(todo=>todo.id===action.payload?{...todo,is_done:!todo.is_done}:todo)}//mapの中のreturnに注意
         break;
       case 'EDIT_MODE':
@@ -43,6 +45,7 @@ const TodoReducer=(state=initialState,action:TodoActions)=>{
        break;
      case 'EDIT_TODO':
        console.log('edittodo');
+       console.log(action.payload)
        return { ...state,edit_id:null, todos: state.todos.map(todo => todo.id === action.payload.id ? { ...todo, title: action.payload.title } : todo) }
        break;
    }

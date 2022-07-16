@@ -1,4 +1,4 @@
-import {Action} from 'redux';
+import {Action} from '@reduxjs/toolkit';
 
 export type Todo={
   id:number,
@@ -20,11 +20,11 @@ type DeleteTodoPayload = number;
 type CheckTodoPayload = number;
 type EditTodoPayload = {
   id: number,
-    title: string,
+  title: string,
 }
 
 export interface InputTodoAction extends Action{
-  type:string,
+  type:'INPUT_TODO',
   payload:InputTodoPayload
 }
 
@@ -52,9 +52,11 @@ export interface EditModeAction extends Action{
 
 export interface EditTodoAction extends Action {
   type: 'EDIT_TODO',
-  payload: any
+  payload: EditTodoPayload
 
 }
-export type TodoActions = InputTodoAction | AddTodoAction | EditModeAction | DeleteTodoAction|CheckTodoAction|EditTodoAction
+export type TodoActions = InputTodoAction | AddTodoAction | EditModeAction | DeleteTodoAction | CheckTodoAction | EditTodoAction
+
+
 
 //**Actions-> Aaction|Baction|Caction, RootState-> A&B&C */

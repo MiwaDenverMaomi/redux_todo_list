@@ -22,14 +22,11 @@ import { deleteTodo,checkTodo,editMode,editTodo } from '../actions/TodoActions';
 
 const ToDoList = ({todos,deleteTodo,checkTodo,editMode,edit_id,editTodo}:Props) => {
   console.log(todos)
-  const handleEdit = (e: any) => {
+  const handleEdit = (e:any) => {
     console.log('handleEdit');
     console.log(e);
-    if (e.keyCode === 13&&e.target.value.trim()!=='') {
-      console.log('enter');
-      if (edit_id !== null) {
-        editTodo(edit_id, e.target.value)
-         }
+    if (e.keyCode === 13 && e.target.value.trim() !== '' && edit_id !== null) {
+      editTodo(edit_id, e.target.value);
        }
 
    }
@@ -83,7 +80,7 @@ type DispatchToProps = {
   deleteTodo: (id: number) => void,
   checkTodo: (id: number) => void,
   editMode: (id: number) => void,
-  editTodo:(id:number,title:string)=>void
+  editTodo: ( id: number, title: string )=>void
 };
 type StateToProps={
   todos: RootState['todo']['todos'],
@@ -96,7 +93,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     deleteTodo: (id: number) => dispatch(deleteTodo(id)),
     checkTodo: (id: number) => dispatch(checkTodo(id)),
     editMode: (id: number) => dispatch(editMode(id)),
-    editTodo:(id:number,title:string)=>dispatch(editTodo(id,title))
+    editTodo: ( id: number, title: string ) => dispatch(editTodo( id, title ))
   }
 };
 
