@@ -21,6 +21,7 @@ import store from '../store';
 const Create =({todo,inputTodo,addTodo}:Props)=>{
   console.log('store')
   console.log(store.getState())
+
      return(
       <>
             <TextField
