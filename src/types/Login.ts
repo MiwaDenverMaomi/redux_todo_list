@@ -9,7 +9,7 @@ export type LoginState = {
   }
 }
 
-type LoginPayload = string;
+type LoginPayload = any;
 type SignUpPayload = {
   result:any
 }

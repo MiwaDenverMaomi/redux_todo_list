@@ -19,6 +19,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { RootState } from '../types';
 import { signup,checkAuthState } from '../actions/LoginActions';
 import { type } from '@testing-library/user-event/dist/type';
+import store from '../store';
 
 const Copyright=(props: any)=> {
   return (
@@ -82,7 +83,7 @@ const SignUp = ({ isLogin, signup,checkAuthState,signUpResult }: Props) => {
     console.log('signupcomponent useeefect')
     checkAuthState();
   }, [signUpResult]);
-  console.log(isLogin);
+  console.log(store.getState());
   return (
     <ThemeProvider theme={theme}>
         <Container component="main" maxWidth="xs">
@@ -143,11 +144,6 @@ const SignUp = ({ isLogin, signup,checkAuthState,signUpResult }: Props) => {
               >
                 Sign Up
               </Button>
-              <Grid item>
-                <Link href="/signin" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
             </Box>
           </Box>
         }

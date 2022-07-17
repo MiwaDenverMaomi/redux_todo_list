@@ -15,6 +15,7 @@ import CommentIcon from '@mui/icons-material/Comment';
 import Typography from '@mui/material/Typography';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import Create from './Create';
+import store from '../store';
 import {RootState} from '../types';
 import { TodoState } from '../types/Todo';
 import { deleteTodo, checkTodo, editMode, editTodo } from '../actions/TodoActions';
@@ -24,7 +25,6 @@ import { checkAuthState } from '../actions/LoginActions';
 
 
 const ToDoList = ({todos,deleteTodo,checkTodo,editMode,edit_id,editTodo,checkAuthState,isLogin}:Props) => {
-  console.log(todos)
   const handleEdit = (e:any) => {
     console.log('handleEdit');
     console.log(e);
@@ -32,9 +32,12 @@ const ToDoList = ({todos,deleteTodo,checkTodo,editMode,edit_id,editTodo,checkAut
       editTodo(edit_id, e.target.value);
        }
   }
+  const Navigate = useNavigate();
   useEffect(() => {
     checkAuthState();
-  },[]);
+  }, []);
+  console.log('todolist');
+  console.log(store.getState());
   return (
   <>
   <Container component = "main" maxWidth = "xs">

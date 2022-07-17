@@ -3,18 +3,23 @@ import { auth } from '../firebase';
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
+  signInWithEmailAndPassword,
   signOut
 } from "firebase/auth";
 
-export const login = (isLogin: boolean) => {
-  return {
-    type: 'LOGIN',
-    payload:isLogin
-  }
-}
+// export const login = (isLogin: boolean) => {
+//   return {
+//     type: 'LOGIN',
+//     payload:isLogin
+//   }
+// }
 
+export const login = (email:string,password:string): ThunkAction<any,any,any,any> =>async(dispatch:Dispatch)=>{
+  const result = await signInWithEmailAndPassword(auth, email, password).then(res => res).catch(err => console.log('err!' + err));
+  dispatch({type:'LOGIN',payload:result});
+};
 export const signup = (email: string, password: string): ThunkAction<any, any, any, any> => async (dispatch: Dispatch) => {
-  const result = await createUserWithEmailAndPassword(auth, email, password).then(res => res.user).catch(err => console.log(err));
+  const result = await createUserWithEmailAndPassword(auth, email, password).then(res => res.user).catch(err =>err);
   console.log(result);
   dispatch({ type: 'SIGNUP', payload: result });
 }
@@ -35,9 +40,8 @@ export const checkAuthState = () => {
 }
 
 export const logout = (): ThunkAction<any, any, any, any> => async (dispatch: Dispatch) => {
-  const result = await signOut(auth).then(res=>res).catch(err=>err);
-  return {
-    type: 'LOGOUT',
-    payload:result
-  }
+  console.log('logout action');
+  const result = await signOut(auth).then(res => { console.log('loggedout'); return res }).catch(err => { console.log(`ログアウト時にエラーが発生しました (${err})`) });
+  console.log(result);
+  dispatch({type:'LOGOUT',payload:result});
 };
