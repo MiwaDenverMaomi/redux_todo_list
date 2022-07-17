@@ -1,4 +1,5 @@
-export const inputTodo=(todo:string)=>{
+//todo list
+export const inputTodo = (todo: string) => {
   return{
     type:'INPUT_TODO',
     payload:todo
