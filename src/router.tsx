@@ -26,7 +26,7 @@ const Router = ({ isLogin }: Props) => {
        <BrowserRouter>
        <Routes>
         <Route path="/" element={ isLogin?<ToDoList/>:<Login />} />
-        <Route path="/signup" element={<SignUp />} />
+            <Route path="/signup" element={<SignUp />} />
       </Routes>
         </BrowserRouter>
       </div>

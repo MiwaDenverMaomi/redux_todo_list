@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { Navigate,useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Dispatch } from '@reduxjs/toolkit';
 import List from '@mui/material/List';
@@ -16,11 +17,13 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import Create from './Create';
 import {RootState} from '../types';
 import { TodoState } from '../types/Todo';
-import { deleteTodo,checkTodo,editMode,editTodo } from '../actions/TodoActions';
+import { deleteTodo, checkTodo, editMode, editTodo } from '../actions/TodoActions';
+import { checkAuthState } from '../actions/LoginActions';
 
 
 
-const ToDoList = ({todos,deleteTodo,checkTodo,editMode,edit_id,editTodo}:Props) => {
+
+const ToDoList = ({todos,deleteTodo,checkTodo,editMode,edit_id,editTodo,checkAuthState,isLogin}:Props) => {
   console.log(todos)
   const handleEdit = (e:any) => {
     console.log('handleEdit');
@@ -28,17 +31,21 @@ const ToDoList = ({todos,deleteTodo,checkTodo,editMode,edit_id,editTodo}:Props) 
     if (e.keyCode === 13 && e.target.value.trim() !== '' && edit_id !== null) {
       editTodo(edit_id, e.target.value);
        }
-
-   }
+  }
+  useEffect(() => {
+    checkAuthState();
+  },[]);
   return (
-    <Container component="main" maxWidth="xs">
-      <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
+  <>
+  <Container component = "main" maxWidth = "xs">
+      < Box
+          sx = {{
+    marginTop: 8,
+      display: 'flex',
+        flexDirection: 'column',
+          alignItems: 'center',
+          }
+}
         >
       <Create />
       <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
@@ -71,8 +78,9 @@ const ToDoList = ({todos,deleteTodo,checkTodo,editMode,edit_id,editTodo}:Props) 
           );
         }):<Typography variant="h6">No todos!</Typography>}
       </List>
-      </Box>
-    </Container>
+      </Box >
+    </Container >
+    </>
   )
 }
 
@@ -80,11 +88,13 @@ type DispatchToProps = {
   deleteTodo: (id: number) => void,
   checkTodo: (id: number) => void,
   editMode: (id: number) => void,
-  editTodo: ( id: number, title: string )=>void
+  editTodo: (id: number, title: string) => void,
+  checkAuthState:()=>void
 };
 type StateToProps={
   todos: RootState['todo']['todos'],
-  edit_id: RootState['todo']['edit_id']
+  edit_id: RootState['todo']['edit_id'],
+  isLogin:RootState['login']['isLogin']
 }
 type Props = StateToProps&DispatchToProps
 
@@ -93,14 +103,16 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     deleteTodo: (id: number) => dispatch(deleteTodo(id)),
     checkTodo: (id: number) => dispatch(checkTodo(id)),
     editMode: (id: number) => dispatch(editMode(id)),
-    editTodo: ( id: number, title: string ) => dispatch(editTodo( id, title ))
+    editTodo: (id: number, title: string) => dispatch(editTodo(id, title)),
+    checkAuthState: () => dispatch(checkAuthState())
   }
 };
 
 const mapStateToProps=(state:RootState)=>{//RootState or TodoState
   return{
     todos: state.todo.todos,
-    edit_id:state.todo.edit_id
+    edit_id: state.todo.edit_id,
+    isLogin:state.login.isLogin
   }
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ToDoList);

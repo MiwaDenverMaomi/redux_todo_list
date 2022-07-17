@@ -6,7 +6,6 @@ export type LoginState = {
     isLogin: boolean,
     signUpResult: any,
     user: any | null,
-    userState:boolean
   }
 }
 
@@ -14,7 +13,9 @@ type LoginPayload = string;
 type SignUpPayload = {
   result:any
 }
-type CheckAuthStatePayload = any;
+// type CheckAuthStatePayload = any;
+type CheckAuthStatePayload = null;
+type LogoutPayload = any;
 
 export interface LoginAction extends Action {
   type: 'LOGIN',
@@ -30,4 +31,9 @@ export interface CheckAuthStateAction extends Action {
   type: 'CHECK_AUTH_STATE',
   payload: CheckAuthStatePayload
 }
-export type LoginActions=LoginAction|SignUpAction|CheckAuthStateAction;
+
+export interface LogoutAction extends Action {
+  type: 'LOGOUT',
+  payload:LogoutPayload
+}
+export type LoginActions=LoginAction|SignUpAction|CheckAuthStateAction|LogoutAction;
