@@ -144,10 +144,10 @@ const Login = ({ isLogin, login,checkAuthState,loginResult }: Props) => {
                 autoComplete="current-password"
                 onChange={e => setPassword(e.target.value)}
               />
-              <FormControlLabel
+              {/* <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
-              />
+              /> */}
               <Button
                 type="submit"
                 fullWidth

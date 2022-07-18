@@ -168,10 +168,6 @@ const SignUp = ({ isLogin, signup,checkAuthState,signUpResult }: Props) => {
                 autoComplete="current-password"
                 onChange={ e=>setRePassword(e.target.value)}
               />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
               <Button
                 type="submit"
                 fullWidth
