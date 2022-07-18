@@ -55,6 +55,7 @@ export interface EditTodoAction extends Action {
   payload: EditTodoPayload
 
 }
+
 export type TodoActions = InputTodoAction | AddTodoAction | EditModeAction | DeleteTodoAction | CheckTodoAction | EditTodoAction
 
 

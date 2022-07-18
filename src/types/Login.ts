@@ -1,18 +1,22 @@
 
 import { Action } from 'redux';
+import type { User } from "firebase/auth";
+import { useState } from "react";
+
+export type UserType = User | null;
 
 export type LoginState = {
   login: {
     isLogin: boolean,
     signUpResult: any,
-    user: any | null,
+    user: UserType,
+    loginResult:string|null
   }
 }
 
 type LoginPayload = any;
-type SignUpPayload = {
-  result:any
-}
+type SignUpPayload = any;
+
 // type CheckAuthStatePayload = any;
 type CheckAuthStatePayload = null;
 type LogoutPayload = any;

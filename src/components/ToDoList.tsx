@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { ThunkDispatch} from 'redux-thunk';
 import { Navigate,useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Dispatch } from '@reduxjs/toolkit';
@@ -87,6 +88,9 @@ const ToDoList = ({todos,deleteTodo,checkTodo,editMode,edit_id,editTodo,checkAut
   )
 }
 
+type AppDispatch = Dispatch;
+type AppThunkDispatch = ThunkDispatch<any, any, any>;
+
 type DispatchToProps = {
   deleteTodo: (id: number) => void,
   checkTodo: (id: number) => void,
@@ -99,9 +103,10 @@ type StateToProps={
   edit_id: RootState['todo']['edit_id'],
   isLogin:RootState['login']['isLogin']
 }
+
 type Props = StateToProps&DispatchToProps
 
-const mapDispatchToProps = (dispatch: Dispatch) => {
+const mapDispatchToProps = (dispatch: AppDispatch&AppThunkDispatch) => {
   return {
     deleteTodo: (id: number) => dispatch(deleteTodo(id)),
     checkTodo: (id: number) => dispatch(checkTodo(id)),

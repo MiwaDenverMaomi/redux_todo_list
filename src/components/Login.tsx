@@ -37,15 +37,54 @@ const Copyright=(props: any)=> {
 
 const theme = createTheme();
 
-const Login = ({ isLogin, login,checkAuthState }: Props) => {
-  const [email, setEmail] = useState<string | null>(null);
-  const [password, setPassword] = useState<string | null>(null);
-  const [errMsg, setErrMsg] = useState<{ emailErr: string, passwordErr: string }>({ emailErr: '', passwordErr: '' });
+const Login = ({ isLogin, login,checkAuthState,loginResult }: Props) => {
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [errMsgs, setErrMsgs] = useState<{ emailErr: string, passwordErr: string }>({ emailErr: '', passwordErr: '' });
 
   const handleSubmit = (e:any) => {
     e.preventDefault();
     console.log('handleSubmit-login');
-    if (errMsg.emailErr === '' && errMsg.passwordErr === '' && email !== null && password !== null) {
+//setErrMsgはすぐには反映されないことに注意。
+    let emailErrMsg = '';
+    let passwordErrMsg = '';
+    setErrMsgs({ emailErr: '', passwordErr: '' });
+
+    const emailPattern = /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]+.[A-Za-z0-9]+$/;
+    const sanitize = /<|>|&|'|"/g;
+
+    if (emailPattern.test(email) === false) {
+      emailErrMsg = 'Input valid email address.';
+    }
+
+    if (email.search(sanitize) !== -1) {
+      emailErrMsg = `Do not use "<",">","&","'".`
+    }
+
+    if (email.length < 6 || email.length > 255) {
+      console.log('login emailerr');
+      emailErrMsg = 'Input email address within 7-255 letters.'
+    }
+
+    if (password.length < 6 || password.length > 255) {
+      passwordErrMsg = 'Input password within 7-255 letters.'
+    }
+
+
+
+    if (passwordErrMsg.length > 0||emailErrMsg.length>0) {
+      setErrMsgs({ ...errMsgs, emailErr:emailErrMsg,passwordErr: passwordErrMsg })
+
+    };
+
+    // if (emailErrMsg.length > 0) {
+    //   console.log('emailErrMsg set')
+    //   console.log(emailErrMsg)
+    //   setErrMsgs({ ...errMsgs, emailErr: emailErrMsg })
+    // };//setErrMsgsの更新はすぐには反映されないので、更新前の
+    //値で上書きされてしまうのだ。
+
+    if (emailErrMsg === '' && passwordErrMsg === '') {
       console.log('login');
       login(email, password);
     }
@@ -55,7 +94,8 @@ const Login = ({ isLogin, login,checkAuthState }: Props) => {
   useEffect(() => {
     checkAuthState();
     navigate("/");
-  }, []);
+  }, [loginResult]);
+
   console.log(store.getState());
   return (
     <ThemeProvider theme = { theme }>
@@ -69,10 +109,16 @@ const Login = ({ isLogin, login,checkAuthState }: Props) => {
       }
     }
     >
-            <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h5" sx={{ mb: 3 }}>
               Login
+          </Typography>
+          <Typography component="div" variant="body2">
+            {loginResult}
+          </Typography>
+          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+            <Typography component="div" variant="body2" color="red">
+              {errMsgs.emailErr}
             </Typography>
-            <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
                 required
@@ -83,7 +129,10 @@ const Login = ({ isLogin, login,checkAuthState }: Props) => {
                 autoComplete="email"
                 autoFocus
                 onChange={e => setEmail(e.target.value)}
-              />
+            />
+            <Typography component="div" variant="body2" color="red">
+              {errMsgs.passwordErr}
+            </Typography>
               <TextField
                 margin="normal"
                 required
@@ -129,7 +178,9 @@ type DispatchToProps = {
 
 }
 type StateToProps = {
-  isLogin:RootState['login']['isLogin']
+  isLogin: RootState['login']['isLogin'],
+  loginResult: RootState['login']['loginResult']
+
 }
 type Props = DispatchToProps & StateToProps;
 
@@ -141,7 +192,8 @@ const mapDispatchToProps = (dispatch: AppDispatch&AppThunkDispatch) => {
 };
 const mapStateToProps = (state: RootState) => {
   return {
-    isLogin:state.login.isLogin
+    isLogin: state.login.isLogin,
+    loginResult:state.login.loginResult
   }
 };
 export default connect(mapStateToProps,mapDispatchToProps)(Login)
