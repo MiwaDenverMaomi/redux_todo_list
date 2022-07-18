@@ -112,7 +112,7 @@ const Login = ({ isLogin, login,checkAuthState,loginResult }: Props) => {
           <Typography component="h1" variant="h5" sx={{ mb: 3 }}>
               Login
           </Typography>
-          <Typography component="div" variant="body2">
+          <Typography component="div" variant="body2" color="red">
             {loginResult}
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>

@@ -122,6 +122,9 @@ const SignUp = ({ isLogin, signup,checkAuthState,signUpResult }: Props) => {
             <Typography component="h1" variant="h5" sx={{mb:3}}>
               Sign Up
             </Typography>
+            <Typography component="div" variant="body2" color="red">
+              {signUpResult}
+            </Typography>
             <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
               <Typography component="div" variant="body2" color="red">
                 {emailErr}
