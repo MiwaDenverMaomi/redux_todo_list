@@ -18,7 +18,7 @@ export const login = (email: string, password: string): ThunkAction<void, RootSt
 
 export const signup = (email: string, password: string): ThunkAction<void, RootState, undefined, RootActions> => async (dispatch: Dispatch) => {
   console.log('signup action');
-  const result = await createUserWithEmailAndPassword(auth, email, password).then(res => res.user).catch(err =>err);
+  const result = await createUserWithEmailAndPassword(auth, email, password).then(res =>  res.user ).catch(err =>  err );
   console.log(result);
   dispatch({ type: 'SIGNUP', payload: result });
 }

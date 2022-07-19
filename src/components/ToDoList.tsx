@@ -25,7 +25,7 @@ import { checkAuthState } from '../actions/LoginActions';
 
 
 
-const ToDoList = ({todos,deleteTodo,checkTodo,editMode,edit_id,editTodo,checkAuthState,isLogin}:Props) => {
+const ToDoList = ({todos,deleteTodo,checkTodo,editMode,edit_id,editTodo,checkAuthState,isLogin,user}:Props) => {
   const handleEdit = (e:any) => {
     console.log('handleEdit');
     console.log(e);
@@ -41,7 +41,7 @@ const ToDoList = ({todos,deleteTodo,checkTodo,editMode,edit_id,editTodo,checkAut
   console.log(store.getState());
   return (
   <>
-  <Container component = "main" maxWidth = "xs">
+      <Container component="main" maxWidth="xs">
       < Box
           sx = {{
     marginTop: 8,
@@ -101,7 +101,8 @@ type DispatchToProps = {
 type StateToProps={
   todos: RootState['todo']['todos'],
   edit_id: RootState['todo']['edit_id'],
-  isLogin:RootState['login']['isLogin']
+  isLogin: RootState['login']['isLogin'],
+  user:RootState['login']['user']
 }
 
 type Props = StateToProps&DispatchToProps
@@ -120,7 +121,8 @@ const mapStateToProps=(state:RootState)=>{//RootState or TodoState
   return{
     todos: state.todo.todos,
     edit_id: state.todo.edit_id,
-    isLogin:state.login.isLogin
+    isLogin: state.login.isLogin,
+    user:state.login.user
   }
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ToDoList);

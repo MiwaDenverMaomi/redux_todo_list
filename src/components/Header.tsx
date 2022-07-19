@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Dispatch } from '@reduxjs/toolkit';
 import { useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
+import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -15,8 +16,9 @@ import { LoginState } from '../types/Login';
 import { RootState,RootActions } from '../types';
 import { login,logout } from '../actions/LoginActions';
 import store from '../store';
+import { UserType } from '../types/Login';
 
-const Header = ({ isLogin,logout }: Props) => {
+const Header = ({ isLogin,logout,user }: Props) => {
   useEffect(() => {
 
   });
@@ -24,13 +26,17 @@ const Header = ({ isLogin,logout }: Props) => {
     < Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography variant="body2" component="div" sx={{ flexGrow: 1, width: '5%', display: {xs:'none',sm:'block'} }}>
+            Hi,{user === null ? 'Guest' : user.email?.slice(0, 5) + '***'}
+          </Typography>
+          <Typography component="div" sx={{ flexGrow: 1, width: { md: '90%', sm:'60%',xs: '10%' }, fontSize: {md:'18px',xs:'14px'} }}>
             Redux TODO List
           </Typography>
+
           {isLogin ?
-            <Button color="inherit" onClick={logout}>Logout</Button>
+            <Button color="inherit" onClick={logout} sx={{ width: '5%', fontSize: { md: '18px', xs: '14px' } }}>Logout</Button>
             :
-            <Button color="inherit"><Link href="/">Login</Link></Button>}
+              <Button color="inherit"><Link href="/">Login</Link></Button>}
         </Toolbar>
       </AppBar>
     </Box >
@@ -38,7 +44,8 @@ const Header = ({ isLogin,logout }: Props) => {
 };
 
 type StateToProps = {
-  isLogin:RootState['login']['isLogin']
+  isLogin: RootState['login']['isLogin'],
+  user:RootState['login']['user']
 };
 
 type DispatchToProps = {
@@ -51,13 +58,13 @@ type AppThunkDispatch = ThunkDispatch<RootState, undefined, RootActions>;
 
 const dispatchToProps = (dispatch:AppDispatch&AppThunkDispatch) => {
   return {
-
     logout:()=>dispatch(logout())
   }
 };
 const mapStateToProps = (state: RootState) => {
   return {
-    isLogin: state.login.isLogin
+    isLogin: state.login.isLogin,
+    user:state.login.user
   }
 };
 

@@ -48,7 +48,7 @@ const LoginReducer = (state = initialState, action:LoginActions)=> {
       let signUpResult = '';
 
       if (action.payload === undefined) {
-        signUpResult= 'Something is wrong. Try again lager.';
+        signUpResult = 'Something is wrong. Try again lager.';
       } else if (action.payload.code === 'auth/invalid-email') {
         signUpResult = 'Input valid Email address.';
       } else if (action.payload.code === 'auth/user-disabled') {
@@ -59,10 +59,12 @@ const LoginReducer = (state = initialState, action:LoginActions)=> {
         signUpResult = 'Password is not invalid.';
       } else if (action.payload.code === 'auth/too-many-requests') {
         signUpResult = 'Too many attempts. Try again later.'
+      } else if (action.payload.code ==='auth/email-already-in-use') {
+        signUpResult = 'This Email address is already in use.'
       } else {
         signUpResult = action.payload.message
       }
-      return { ...state, user: action.payload, signUpResult: action.payload}
+      return { ...state, user: action.payload, signUpResult: signUpResult}
       break;
 
     case 'CHECK_AUTH_STATE':
@@ -70,6 +72,7 @@ const LoginReducer = (state = initialState, action:LoginActions)=> {
       console.log(action.payload);
       return { ...state, user: action.payload, isLogin: action.payload === null ? false : true }
       break;
+
     case 'LOGOUT':
       console.log('logoutreducer');
       console.log(action.payload)
