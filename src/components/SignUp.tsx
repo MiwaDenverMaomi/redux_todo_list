@@ -16,12 +16,11 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { RootState } from '../types';
+import { RootState,RootActions } from '../types';
 import { signup,checkAuthState } from '../actions/LoginActions';
-import { type } from '@testing-library/user-event/dist/type';
 import store from '../store';
 
-const Copyright=(props: any)=> {
+const Copyright = React.memo((props: any)=> {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
@@ -33,6 +32,7 @@ const Copyright=(props: any)=> {
     </Typography>
   );
 }
+);
 
 const theme = createTheme();
 
@@ -198,7 +198,7 @@ type StateToProps = {
 }
 type Props = StateToProps & DispatchToProps;
 
-type AppThunkDispatch = ThunkDispatch<any, any, any>;
+type AppThunkDispatch = ThunkDispatch<RootState, undefined, RootActions>;
 type AppDispatch = Dispatch;
 
 const mapDispatchToProps = (dispatch: AppThunkDispatch & AppDispatch)=> {

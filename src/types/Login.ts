@@ -7,19 +7,19 @@ export type UserType = User | null;
 
 export type LoginState = {
   login: {
-    isLogin: boolean,
-    signUpResult: any,
-    user: UserType,
-    loginResult:string|null
+      isLogin: boolean,
+      signUpResult: string,
+      loginResult: string,
+      user: UserType,
+    }
   }
-}
 
-type LoginPayload = any;
-type SignUpPayload = any;
 
-// type CheckAuthStatePayload = any;
+type LoginPayload = UserType |undefined|any;
+type SignUpPayload = UserType | undefined | any;
+
 type CheckAuthStatePayload = null;
-type LogoutPayload = any;
+type LogoutPayload = undefined;
 
 export interface LoginAction extends Action {
   type: 'LOGIN',

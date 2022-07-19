@@ -12,7 +12,7 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { LoginState } from '../types/Login';
-import { RootState } from '../types';
+import { RootState,RootActions } from '../types';
 import { login,logout } from '../actions/LoginActions';
 import store from '../store';
 
@@ -47,7 +47,7 @@ type DispatchToProps = {
 type Props = StateToProps&DispatchToProps;
 
 type AppDispatch = Dispatch;
-type AppThunkDispatch = ThunkDispatch<any, any, any>;
+type AppThunkDispatch = ThunkDispatch<RootState, undefined, RootActions>;
 
 const dispatchToProps = (dispatch:AppDispatch&AppThunkDispatch) => {
   return {

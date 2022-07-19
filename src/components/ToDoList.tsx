@@ -17,7 +17,7 @@ import Typography from '@mui/material/Typography';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import Create from './Create';
 import store from '../store';
-import {RootState} from '../types';
+import {RootState,RootActions} from '../types';
 import { TodoState } from '../types/Todo';
 import { deleteTodo, checkTodo, editMode, editTodo } from '../actions/TodoActions';
 import { checkAuthState } from '../actions/LoginActions';
@@ -89,7 +89,7 @@ const ToDoList = ({todos,deleteTodo,checkTodo,editMode,edit_id,editTodo,checkAut
 }
 
 type AppDispatch = Dispatch;
-type AppThunkDispatch = ThunkDispatch<any, any, any>;
+type AppThunkDispatch = ThunkDispatch<RootState, undefined, RootActions>;
 
 type DispatchToProps = {
   deleteTodo: (id: number) => void,
